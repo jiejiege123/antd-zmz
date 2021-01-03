@@ -1,8 +1,13 @@
 @import '~antd/es/style/themes/default.less';
 
 .container {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   height: 100vh;
   overflow: auto;
   background: @layout-body-background;
@@ -19,7 +24,9 @@
 }
 
 .content {
-  flex: 1;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
   padding: 32px 0;
 }
 
@@ -68,4 +75,18 @@
   margin-bottom: 40px;
   color: @text-color-secondary;
   font-size: @font-size-base;
+}
+
+.footer{
+  color: #777;
+  text-align: center;
+  padding-bottom: 20px;
+  font-family: "Source Sans Pro","Hiragino Sans GB","Microsoft Yahei",SimSun,Helvetica,Arial,Sans-serif,monospace;
+  font-size: 14px;
+  a{
+    color: #777
+  }
+  .copyname{
+    padding: 0 5px;
+  }
 }
