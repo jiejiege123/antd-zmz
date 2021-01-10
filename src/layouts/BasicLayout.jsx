@@ -1,17 +1,13 @@
-/**
- * Ant Design Pro v4 use `@ant-design/pro-layout` to handle Layout.
- * You can view component api by:
- * https://github.com/ant-design/ant-design-pro-layout
- */
-import ProLayout, { DefaultFooter } from '@ant-design/pro-layout';
-import React, { useEffect, useMemo, useRef } from 'react';
-import { Link, useIntl, connect, history } from 'umi';
-import { GithubOutlined } from '@ant-design/icons';
-import { Result, Button } from 'antd';
-import Authorized from '@/utils/Authorized';
-import RightContent from '@/components/GlobalHeader/RightContent';
-import { getMatchMenu } from '@umijs/route-utils';
-import logo from '../assets/logo.svg';
+import ProLayout, { DefaultFooter } from "@ant-design/pro-layout";
+import React, { useEffect, useMemo, useRef } from "react";
+import { Link, useIntl, connect, history } from "umi";
+import { GithubOutlined } from "@ant-design/icons";
+import { Result, Button } from "antd";
+import Authorized from "@/utils/Authorized";
+import RightContent from "@/components/GlobalHeader/RightContent";
+import { getMatchMenu } from "@umijs/route-utils";
+import logo from "../assets/logo.svg";
+
 const noMatch = (
   <Result
     status={403}
@@ -42,21 +38,21 @@ const defaultFooterDom = (
     copyright={`${new Date().getFullYear()} 蚂蚁集团体验技术部出品`}
     links={[
       {
-        key: 'Ant Design Pro',
-        title: 'Ant Design Pro',
-        href: 'https://pro.ant.design',
+        key: "Ant Design Pro",
+        title: "Ant Design Pro",
+        href: "https://pro.ant.design",
         blankTarget: true,
       },
       {
-        key: 'github',
+        key: "github",
         title: <GithubOutlined />,
-        href: 'https://github.com/ant-design/ant-design-pro',
+        href: "https://github.com/ant-design/ant-design-pro",
         blankTarget: true,
       },
       {
-        key: 'Ant Design',
-        title: 'Ant Design',
-        href: 'https://ant.design',
+        key: "Ant Design",
+        title: "Ant Design",
+        href: "https://ant.design",
         blankTarget: true,
       },
     ]}
@@ -69,14 +65,15 @@ const BasicLayout = (props) => {
     children,
     settings,
     location = {
-      pathname: '/',
+      pathname: "/",
     },
   } = props;
   const menuDataRef = useRef([]);
   useEffect(() => {
+    // 每次渲染后都执行的函数， 有点类似 vue 的 watch 和 computed
     if (dispatch) {
       dispatch({
-        type: 'user/fetchCurrent',
+        type: "user/fetchCurrent",
       });
     }
   }, []);
@@ -87,7 +84,7 @@ const BasicLayout = (props) => {
   const handleMenuCollapse = (payload) => {
     if (dispatch) {
       dispatch({
-        type: 'global/changeLayoutCollapsed',
+        type: "global/changeLayoutCollapsed",
         payload,
       });
     }
@@ -95,7 +92,7 @@ const BasicLayout = (props) => {
 
   const authorized = useMemo(
     () =>
-      getMatchMenu(location.pathname || '/', menuDataRef.current).pop() || {
+      getMatchMenu(location.pathname || "/", menuDataRef.current).pop() || {
         authority: undefined,
       },
     [location.pathname],
@@ -108,7 +105,7 @@ const BasicLayout = (props) => {
       {...props}
       {...settings}
       onCollapse={handleMenuCollapse}
-      onMenuHeaderClick={() => history.push('/')}
+      onMenuHeaderClick={() => history.push("/")}
       menuItemRender={(menuItemProps, defaultDom) => {
         if (
           menuItemProps.isUrl ||
@@ -122,9 +119,9 @@ const BasicLayout = (props) => {
       }}
       breadcrumbRender={(routers = []) => [
         {
-          path: '/',
+          path: "/",
           breadcrumbName: formatMessage({
-            id: 'menu.home',
+            id: "menu.home",
           }),
         },
         ...routers,
@@ -132,7 +129,7 @@ const BasicLayout = (props) => {
       itemRender={(route, params, routes, paths) => {
         const first = routes.indexOf(route) === 0;
         return first ? (
-          <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
+          <Link to={paths.join("/")}>{route.breadcrumbName}</Link>
         ) : (
           <span>{route.breadcrumbName}</span>
         );

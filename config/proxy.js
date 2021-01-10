@@ -8,10 +8,11 @@
 export default {
   dev: {
     '/api/': {
-      target: 'https://preview.pro.ant.design',
+      // target: 'https://preview.pro.ant.design',
+      target: `https://www.zemengzhou.top:3000`,
       changeOrigin: true,
       pathRewrite: {
-        '^': '',
+        '^/api': '',
       },
     },
   },

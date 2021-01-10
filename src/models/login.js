@@ -4,6 +4,8 @@ import { fakeAccountLogin } from '@/services/login';
 import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 import { message } from 'antd';
+import md5 from 'js-md5';
+
 const Model = {
   namespace: 'login',
   state: {
@@ -11,13 +13,16 @@ const Model = {
   },
   effects: {
     *login({ payload }, { call, put }) {
-      const response = yield call(fakeAccountLogin, payload);
+      const param = {};
+      param.password = md5(payload.password);
+      param.username = payload.userName;
+      const response = yield call(fakeAccountLogin, param);
+      response.type = 'account';
       yield put({
         type: 'changeLoginStatus',
         payload: response,
       }); // Login successfully
-
-      if (response.status === 'ok') {
+      if (response.Status === 200) {
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
         message.success('🎉 🎉 🎉  登录成功！');
@@ -37,8 +42,10 @@ const Model = {
             return;
           }
         }
-
+        // 登录之后 根据路由 进入BasicLayout  welcome
         history.replace(redirect || '/');
+      } else {
+        // message.error(response.Msg);
       }
     },
 

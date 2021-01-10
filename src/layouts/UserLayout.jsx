@@ -1,4 +1,5 @@
-import { DefaultFooter, getMenuData, getPageTitle } from '@ant-design/pro-layout';
+// import { DefaultFooter, getMenuData, getPageTitle } from '@ant-design/pro-layout';
+import { getMenuData, getPageTitle } from '@ant-design/pro-layout';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { Link, SelectLang, useIntl, connect, FormattedMessage } from 'umi';
 import React from 'react';
@@ -58,8 +59,13 @@ const UserLayout = (props) => {
         </div>
         <div className={styles.footer}>
           <p>
-            © 2020 Copyright 
-            <a class={styles.copyname} href="https://www.zemengzhou.top/welcome" target="_blank" rel="noopener noreferrer">
+            © 2020 Copyright
+            <a
+              className={styles.copyname}
+              href="https://www.zemengzhou.top/welcome"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               舴艋舟_个人博客
             </a>
             / Powered by React & AntdPro

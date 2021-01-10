@@ -4,6 +4,7 @@
  */
 import { extend } from 'umi-request';
 import { notification } from 'antd';
+
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
   201: '新建或修改数据成功。',
@@ -27,7 +28,6 @@ const codeMessage = {
 
 const errorHandler = (error) => {
   const { response } = error;
-
   if (response && response.status) {
     const errorText = codeMessage[response.status] || response.statusText;
     const { status, url } = response;
@@ -47,8 +47,8 @@ const errorHandler = (error) => {
 /**
  * 配置request请求时的默认参数
  */
-
 const request = extend({
+  prefix: process.env.NODE_ENV === 'development' ? '/api' : '',
   errorHandler,
   // 默认错误处理
   credentials: 'include', // 默认请求是否带上cookie
