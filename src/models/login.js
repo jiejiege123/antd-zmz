@@ -1,13 +1,13 @@
-import { stringify } from 'querystring';
-import { history } from 'umi';
-import { fakeAccountLogin } from '@/services/login';
-import { setAuthority } from '@/utils/authority';
-import { getPageQuery } from '@/utils/utils';
-import { message } from 'antd';
-import md5 from 'js-md5';
+import { stringify } from "querystring";
+import { history } from "umi";
+import { fakeAccountLogin } from "@/services/login";
+import { setAuthority } from "@/utils/authority";
+import { getPageQuery } from "@/utils/utils";
+import { message } from "antd";
+import md5 from "js-md5";
 
 const Model = {
-  namespace: 'login',
+  namespace: "login",
   state: {
     status: undefined,
   },
@@ -17,15 +17,15 @@ const Model = {
       param.password = md5(payload.password);
       param.username = payload.userName;
       const response = yield call(fakeAccountLogin, param);
-      response.type = 'account';
+      response.type = "account";
       yield put({
-        type: 'changeLoginStatus',
+        type: "changeLoginStatus",
         payload: response,
       }); // Login successfully
       if (response.Status === 200) {
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
-        message.success('🎉 🎉 🎉  登录成功！');
+        message.success("🎉 🎉 🎉  登录成功！");
         let { redirect } = params;
 
         if (redirect) {
@@ -35,15 +35,15 @@ const Model = {
             redirect = redirect.substr(urlParams.origin.length);
 
             if (redirect.match(/^\/.*#/)) {
-              redirect = redirect.substr(redirect.indexOf('#') + 1);
+              redirect = redirect.substr(redirect.indexOf("#") + 1);
             }
           } else {
-            window.location.href = '/';
+            window.location.href = "/";
             return;
           }
         }
         // 登录之后 根据路由 进入BasicLayout  welcome
-        history.replace(redirect || '/');
+        history.replace(redirect || "/");
       } else {
         // message.error(response.Msg);
       }
@@ -52,9 +52,9 @@ const Model = {
     logout() {
       const { redirect } = getPageQuery(); // Note: There may be security issues, please note
 
-      if (window.location.pathname !== '/user/login' && !redirect) {
+      if (window.location.pathname !== "/user/login" && !redirect) {
         history.replace({
-          pathname: '/user/login',
+          pathname: "/user/login",
           search: stringify({
             redirect: window.location.href,
           }),

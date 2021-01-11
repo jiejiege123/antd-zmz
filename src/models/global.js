@@ -1,6 +1,7 @@
-import { queryNotices } from '@/services/user';
+import { queryNotices } from "@/services/user";
+
 const GlobalModel = {
-  namespace: 'global',
+  namespace: "global",
   state: {
     collapsed: false,
     notices: [],
@@ -9,14 +10,14 @@ const GlobalModel = {
     *fetchNotices(_, { call, put, select }) {
       const data = yield call(queryNotices);
       yield put({
-        type: 'saveNotices',
+        type: "saveNotices",
         payload: data,
       });
       const unreadCount = yield select(
         (state) => state.global.notices.filter((item) => !item.read).length,
       );
       yield put({
-        type: 'user/changeNotifyCount',
+        type: "user/changeNotifyCount",
         payload: {
           totalCount: data.length,
           unreadCount,
@@ -26,7 +27,7 @@ const GlobalModel = {
 
     *clearNotices({ payload }, { put, select }) {
       yield put({
-        type: 'saveClearedNotices',
+        type: "saveClearedNotices",
         payload,
       });
       const count = yield select((state) => state.global.notices.length);
@@ -34,7 +35,7 @@ const GlobalModel = {
         (state) => state.global.notices.filter((item) => !item.read).length,
       );
       yield put({
-        type: 'user/changeNotifyCount',
+        type: "user/changeNotifyCount",
         payload: {
           totalCount: count,
           unreadCount,
@@ -55,11 +56,11 @@ const GlobalModel = {
         }),
       );
       yield put({
-        type: 'saveNotices',
+        type: "saveNotices",
         payload: notices,
       });
       yield put({
-        type: 'user/changeNotifyCount',
+        type: "user/changeNotifyCount",
         payload: {
           totalCount: notices.length,
           unreadCount: notices.filter((item) => !item.read).length,

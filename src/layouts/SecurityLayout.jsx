@@ -1,7 +1,7 @@
-import React from 'react';
-import { PageLoading } from '@ant-design/pro-layout';
-import { Redirect, connect } from 'umi';
-import { stringify } from 'querystring';
+import React from "react";
+import { PageLoading } from "@ant-design/pro-layout";
+import { Redirect, connect } from "umi";
+import { stringify } from "querystring";
 
 class SecurityLayout extends React.Component {
   state = {
@@ -16,7 +16,7 @@ class SecurityLayout extends React.Component {
 
     if (dispatch) {
       dispatch({
-        type: 'user/fetchCurrent',
+        type: "user/fetchCurrent",
       });
     }
   }
@@ -35,7 +35,7 @@ class SecurityLayout extends React.Component {
       return <PageLoading />;
     }
 
-    if (!isLogin && window.location.pathname !== '/user/login') {
+    if (!isLogin && window.location.pathname !== "/user/login") {
       return <Redirect to={`/user/login?${queryString}`} />;
     }
 
