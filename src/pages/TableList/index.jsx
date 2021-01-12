@@ -1,29 +1,29 @@
-import { PlusOutlined } from '@ant-design/icons';
-import { Button, message, Input, Drawer } from 'antd';
-import React, { useState, useRef } from 'react';
-import { useIntl, FormattedMessage } from 'umi';
-import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
-import ProTable from '@ant-design/pro-table';
-import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
-import ProDescriptions from '@ant-design/pro-descriptions';
-import UpdateForm from './components/UpdateForm';
-import { queryRule, updateRule, addRule, removeRule } from './service';
+import { PlusOutlined } from "@ant-design/icons";
+import { Button, message, Input, Drawer } from "antd";
+import React, { useState, useRef } from "react";
+import { useIntl, FormattedMessage } from "umi";
+import { PageContainer, FooterToolbar } from "@ant-design/pro-layout";
+import ProTable from "@ant-design/pro-table";
+import { ModalForm, ProFormText, ProFormTextArea } from "@ant-design/pro-form";
+import ProDescriptions from "@ant-design/pro-descriptions";
+import UpdateForm from "./components/UpdateForm";
+import { queryRule, updateRule, addRule, removeRule } from "./service";
 /**
  * 添加节点
  * @param fields
  */
 
 const handleAdd = async (fields) => {
-  const hide = message.loading('正在添加');
+  const hide = message.loading("正在添加");
 
   try {
     await addRule({ ...fields });
     hide();
-    message.success('添加成功');
+    message.success("添加成功");
     return true;
   } catch (error) {
     hide();
-    message.error('添加失败请重试！');
+    message.error("添加失败请重试！");
     return false;
   }
 };
@@ -33,7 +33,7 @@ const handleAdd = async (fields) => {
  */
 
 const handleUpdate = async (fields) => {
-  const hide = message.loading('正在配置');
+  const hide = message.loading("正在配置");
 
   try {
     await updateRule({
@@ -42,11 +42,11 @@ const handleUpdate = async (fields) => {
       key: fields.key,
     });
     hide();
-    message.success('配置成功');
+    message.success("配置成功");
     return true;
   } catch (error) {
     hide();
-    message.error('配置失败请重试！');
+    message.error("配置失败请重试！");
     return false;
   }
 };
@@ -56,7 +56,7 @@ const handleUpdate = async (fields) => {
  */
 
 const handleRemove = async (selectedRows) => {
-  const hide = message.loading('正在删除');
+  const hide = message.loading("正在删除");
   if (!selectedRows) return true;
 
   try {
@@ -64,11 +64,11 @@ const handleRemove = async (selectedRows) => {
       key: selectedRows.map((row) => row.key),
     });
     hide();
-    message.success('删除成功，即将刷新');
+    message.success("删除成功，即将刷新");
     return true;
   } catch (error) {
     hide();
-    message.error('删除失败，请重试');
+    message.error("删除失败，请重试");
     return false;
   }
 };
@@ -100,8 +100,8 @@ const TableList = () => {
           defaultMessage="规则名称"
         />
       ),
-      dataIndex: 'name',
-      tip: '规则名称是唯一的 key',
+      dataIndex: "name",
+      tip: "规则名称是唯一的 key",
       render: (dom, entity) => {
         return (
           <a
@@ -117,48 +117,48 @@ const TableList = () => {
     },
     {
       title: <FormattedMessage id="pages.searchTable.titleDesc" defaultMessage="描述" />,
-      dataIndex: 'desc',
-      valueType: 'textarea',
+      dataIndex: "desc",
+      valueType: "textarea",
     },
     {
       title: <FormattedMessage id="pages.searchTable.titleCallNo" defaultMessage="服务调用次数" />,
-      dataIndex: 'callNo',
+      dataIndex: "callNo",
       sorter: true,
       hideInForm: true,
       renderText: (val) =>
         `${val}${intl.formatMessage({
-          id: 'pages.searchTable.tenThousand',
-          defaultMessage: ' 万 ',
+          id: "pages.searchTable.tenThousand",
+          defaultMessage: " 万 ",
         })}`,
     },
     {
       title: <FormattedMessage id="pages.searchTable.titleStatus" defaultMessage="状态" />,
-      dataIndex: 'status',
+      dataIndex: "status",
       hideInForm: true,
       valueEnum: {
         0: {
           text: (
             <FormattedMessage id="pages.searchTable.nameStatus.default" defaultMessage="关闭" />
           ),
-          status: 'Default',
+          status: "Default",
         },
         1: {
           text: (
             <FormattedMessage id="pages.searchTable.nameStatus.running" defaultMessage="运行中" />
           ),
-          status: 'Processing',
+          status: "Processing",
         },
         2: {
           text: (
             <FormattedMessage id="pages.searchTable.nameStatus.online" defaultMessage="已上线" />
           ),
-          status: 'Success',
+          status: "Success",
         },
         3: {
           text: (
             <FormattedMessage id="pages.searchTable.nameStatus.abnormal" defaultMessage="异常" />
           ),
-          status: 'Error',
+          status: "Error",
         },
       },
     },
@@ -167,22 +167,22 @@ const TableList = () => {
         <FormattedMessage id="pages.searchTable.titleUpdatedAt" defaultMessage="上次调度时间" />
       ),
       sorter: true,
-      dataIndex: 'updatedAt',
-      valueType: 'dateTime',
+      dataIndex: "updatedAt",
+      valueType: "dateTime",
       renderFormItem: (item, { defaultRender, ...rest }, form) => {
-        const status = form.getFieldValue('status');
+        const status = form.getFieldValue("status");
 
-        if (`${status}` === '0') {
+        if (`${status}` === "0") {
           return false;
         }
 
-        if (`${status}` === '3') {
+        if (`${status}` === "3") {
           return (
             <Input
               {...rest}
               placeholder={intl.formatMessage({
-                id: 'pages.searchTable.exception',
-                defaultMessage: '请输入异常原因！',
+                id: "pages.searchTable.exception",
+                defaultMessage: "请输入异常原因！",
               })}
             />
           );
@@ -193,8 +193,8 @@ const TableList = () => {
     },
     {
       title: <FormattedMessage id="pages.searchTable.titleOption" defaultMessage="操作" />,
-      dataIndex: 'option',
-      valueType: 'option',
+      dataIndex: "option",
+      valueType: "option",
       render: (_, record) => [
         <a
           key="config"
@@ -215,8 +215,8 @@ const TableList = () => {
     <PageContainer>
       <ProTable
         headerTitle={intl.formatMessage({
-          id: 'pages.searchTable.title',
-          defaultMessage: '查询表格',
+          id: "pages.searchTable.title",
+          defaultMessage: "查询表格",
         })}
         actionRef={actionRef}
         rowKey="key"
@@ -246,22 +246,22 @@ const TableList = () => {
         <FooterToolbar
           extra={
             <div>
-              <FormattedMessage id="pages.searchTable.chosen" defaultMessage="已选择" />{' '}
+              <FormattedMessage id="pages.searchTable.chosen" defaultMessage="已选择" />{" "}
               <a
                 style={{
                   fontWeight: 600,
                 }}
               >
                 {selectedRowsState.length}
-              </a>{' '}
+              </a>{" "}
               <FormattedMessage id="pages.searchTable.item" defaultMessage="项" />
               &nbsp;&nbsp;
               <span>
                 <FormattedMessage
                   id="pages.searchTable.totalServiceCalls"
                   defaultMessage="服务调用次数总计"
-                />{' '}
-                {selectedRowsState.reduce((pre, item) => pre + item.callNo, 0)}{' '}
+                />{" "}
+                {selectedRowsState.reduce((pre, item) => pre + item.callNo, 0)}{" "}
                 <FormattedMessage id="pages.searchTable.tenThousand" defaultMessage="万" />
               </span>
             </div>
@@ -283,8 +283,8 @@ const TableList = () => {
       )}
       <ModalForm
         title={intl.formatMessage({
-          id: 'pages.searchTable.createForm.newRule',
-          defaultMessage: '新建规则',
+          id: "pages.searchTable.createForm.newRule",
+          defaultMessage: "新建规则",
         })}
         width="400px"
         visible={createModalVisible}

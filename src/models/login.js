@@ -18,14 +18,22 @@ const Model = {
       param.username = payload.userName;
       const response = yield call(fakeAccountLogin, param);
       response.type = "account";
-      yield put({
-        type: "changeLoginStatus",
-        payload: response,
-      }); // Login successfully
+      // Login successfully
       if (response.Status === 200) {
+        response.status = 200;
+        yield put({
+          type: "changeLoginStatus",
+          payload: response,
+        }); 
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
         message.success("🎉 🎉 🎉  登录成功！");
+        localStorage.setItem("loginReq", response.Data.id);
+        // yield put({
+        //   type: "setLoginReq",
+        //   payload: response,
+        // });
+
         let { redirect } = params;
 
         if (redirect) {
@@ -66,7 +74,7 @@ const Model = {
     changeLoginStatus(state, { payload }) {
       setAuthority(payload.currentAuthority);
       return { ...state, status: payload.status, type: payload.type };
-    },
-  },
+    }
+  }
 };
 export default Model;

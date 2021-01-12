@@ -14,17 +14,21 @@ const UserModel = {
       });
     },
 
-    *fetchCurrent({ payload }, { call, put }) {
-      const response = yield call(queryCurrent);
+    *fetchCurrent(_, { call, put }) {
+      // 需要有个保持登录的东西
+      // const { id = "1" } = yield select((state) => state.login.loginReq);
+      const id = localStorage.getItem("loginReq") || 1;
+      const { Data } = yield call(queryCurrent, { id });
+      Data.userid = Data.id;
       yield put({
         type: "saveCurrentUser",
-        payload: response,
+        payload: Data,
       });
     },
   },
   reducers: {
-    saveCurrentUser(state, action) {
-      return { ...state, currentUser: action.payload || {} };
+    saveCurrentUser(state, { payload }) {
+      return { ...state, currentUser: payload || {} };
     },
 
     changeNotifyCount(
