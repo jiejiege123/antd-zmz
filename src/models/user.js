@@ -20,6 +20,8 @@ const UserModel = {
       const id = localStorage.getItem("loginReq") || 1;
       const { Data } = yield call(queryCurrent, { id });
       Data.userid = Data.id;
+      Data.avatar="https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png";
+
       yield put({
         type: "saveCurrentUser",
         payload: Data,

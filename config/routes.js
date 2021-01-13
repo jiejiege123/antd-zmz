@@ -55,6 +55,7 @@ export default [
                 path: '/list',
                 component: './TableList',
               },
+              
               {
                 component: './404',
               },

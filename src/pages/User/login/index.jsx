@@ -27,7 +27,6 @@ const LoginMessage = ({ content }) => (
 
 const Login = (props) => {
   const { userLogin = {}, submitting } = props;
-  console.log(userLogin);
   const { status, type: loginType } = userLogin;
   const [type, setType] = useState("account");
   const intl = useIntl();

@@ -100,13 +100,13 @@ const BasicLayout = (props) => {
   const { formatMessage } = useIntl();
   return (
     <ProLayout
-      logo={logo}
-      formatMessage={formatMessage}
-      {...props}
+      logo={logo} // 最左上的logo
+      formatMessage={formatMessage} // 翻译相关的东西
+      {...props} // 主要影响右侧菜单栏
       {...settings}
-      onCollapse={handleMenuCollapse}
-      onMenuHeaderClick={() => history.push("/")}
-      menuItemRender={(menuItemProps, defaultDom) => {
+      onCollapse={handleMenuCollapse} // 菜单折叠收起事件
+      onMenuHeaderClick={() => history.push("/")} // menu 菜单的头部点击事件
+      menuItemRender={(menuItemProps, defaultDom) => { // 自定义菜单项的 render 方法
         if (
           menuItemProps.isUrl ||
           !menuItemProps.path ||
@@ -117,7 +117,7 @@ const BasicLayout = (props) => {
 
         return <Link to={menuItemProps.path}>{defaultDom}</Link>;
       }}
-      breadcrumbRender={(routers = []) => [
+      breadcrumbRender={(routers = []) => [ // 自定义面包屑的数据
         {
           path: "/",
           breadcrumbName: formatMessage({
@@ -126,7 +126,7 @@ const BasicLayout = (props) => {
         },
         ...routers,
       ]}
-      itemRender={(route, params, routes, paths) => {
+      itemRender={(route, params, routes, paths) => { // 权限菜单相关
         const first = routes.indexOf(route) === 0;
         return first ? (
           <Link to={paths.join("/")}>{route.breadcrumbName}</Link>
@@ -134,10 +134,10 @@ const BasicLayout = (props) => {
           <span>{route.breadcrumbName}</span>
         );
       }}
-      footerRender={() => defaultFooterDom}
-      menuDataRender={menuDataRender}
-      rightContentRender={() => <RightContent />}
-      postMenuData={(menuData) => {
+      menuDataRender={menuDataRender} // 权限菜单相关
+      footerRender={() => defaultFooterDom} // footer
+      rightContentRender={() => <RightContent />} // header
+      postMenuData={(menuData) => { // 服务器来管理我们的路由
         menuDataRef.current = menuData || [];
         return menuData || [];
       }}

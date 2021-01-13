@@ -13,7 +13,7 @@ import { queryRule, updateRule, addRule, removeRule } from "./service";
  * @param fields
  */
 
-const handleAdd = async (fields) => {
+const handleAdd = async(fields) => {
   const hide = message.loading("正在添加");
 
   try {
@@ -32,7 +32,7 @@ const handleAdd = async (fields) => {
  * @param fields
  */
 
-const handleUpdate = async (fields) => {
+const handleUpdate = async(fields) => {
   const hide = message.loading("正在配置");
 
   try {
@@ -55,7 +55,7 @@ const handleUpdate = async (fields) => {
  * @param selectedRows
  */
 
-const handleRemove = async (selectedRows) => {
+const handleRemove = async(selectedRows) => {
   const hide = message.loading("正在删除");
   if (!selectedRows) return true;
 
@@ -268,7 +268,7 @@ const TableList = () => {
           }
         >
           <Button
-            onClick={async () => {
+            onClick={async() => {
               await handleRemove(selectedRowsState);
               setSelectedRows([]);
               actionRef.current?.reloadAndRest?.();
@@ -289,7 +289,7 @@ const TableList = () => {
         width="400px"
         visible={createModalVisible}
         onVisibleChange={handleModalVisible}
-        onFinish={async (value) => {
+        onFinish={async(value) => {
           const success = await handleAdd(value);
 
           if (success) {
@@ -319,7 +319,7 @@ const TableList = () => {
         <ProFormTextArea width="md" name="desc" />
       </ModalForm>
       <UpdateForm
-        onSubmit={async (value) => {
+        onSubmit={async(value) => {
           const success = await handleUpdate(value);
 
           if (success) {
@@ -352,7 +352,7 @@ const TableList = () => {
           <ProDescriptions
             column={2}
             title={currentRow?.name}
-            request={async () => ({
+            request={async() => ({
               data: currentRow || {},
             })}
             params={{

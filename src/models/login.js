@@ -21,18 +21,18 @@ const Model = {
       // Login successfully
       if (response.Status === 200) {
         response.status = 200;
+        response.currentAuthority = "admin";
+
         yield put({
           type: "changeLoginStatus",
           payload: response,
         }); 
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
+        
         message.success("🎉 🎉 🎉  登录成功！");
         localStorage.setItem("loginReq", response.Data.id);
-        // yield put({
-        //   type: "setLoginReq",
-        //   payload: response,
-        // });
+
 
         let { redirect } = params;
 
@@ -72,6 +72,7 @@ const Model = {
   },
   reducers: {
     changeLoginStatus(state, { payload }) {
+      console.log(payload.currentAuthority);
       setAuthority(payload.currentAuthority);
       return { ...state, status: payload.status, type: payload.type };
     }
