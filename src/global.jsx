@@ -1,24 +1,25 @@
-import { Button, message, notification } from 'antd';
-import React from 'react';
-import { useIntl } from 'umi';
-import defaultSettings from '../config/defaultSettings';
+import { Button, message, notification } from "antd";
+import React from "react";
+import { useIntl } from "umi";
+import defaultSettings from "../config/defaultSettings";
+
 const { pwa } = defaultSettings;
-const isHttps = document.location.protocol === 'https:'; // if pwa is true
+const isHttps = document.location.protocol === "https:"; // if pwa is true
 
 if (pwa) {
   // Notify user if offline now
-  window.addEventListener('sw.offline', () => {
+  window.addEventListener("sw.offline", () => {
     message.warning(
       useIntl().formatMessage({
-        id: 'app.pwa.offline',
+        id: "app.pwa.offline",
       }),
     );
   }); // Pop up a prompt on the page asking the user if they want to use the latest version
 
-  window.addEventListener('sw.updated', (event) => {
+  window.addEventListener("sw.updated", (event) => {
     const e = event;
 
-    const reloadSW = async () => {
+    const reloadSW = async() => {
       // Check if there is sw whose state is waiting in ServiceWorkerRegistration
       // https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration
       const worker = e.detail && e.detail.waiting;
@@ -40,7 +41,7 @@ if (pwa) {
 
         worker.postMessage(
           {
-            type: 'skip-waiting',
+            type: "skip-waiting",
           },
           [channel.port2],
         );
@@ -60,23 +61,23 @@ if (pwa) {
         }}
       >
         {useIntl().formatMessage({
-          id: 'app.pwa.serviceworker.updated.ok',
+          id: "app.pwa.serviceworker.updated.ok",
         })}
       </Button>
     );
     notification.open({
       message: useIntl().formatMessage({
-        id: 'app.pwa.serviceworker.updated',
+        id: "app.pwa.serviceworker.updated",
       }),
       description: useIntl().formatMessage({
-        id: 'app.pwa.serviceworker.updated.hint',
+        id: "app.pwa.serviceworker.updated.hint",
       }),
       btn,
       key,
-      onClose: async () => null,
+      onClose: async() => null,
     });
   });
-} else if ('serviceWorker' in navigator && isHttps) {
+} else if ("serviceWorker" in navigator && isHttps) {
   // unregister service worker
   const { serviceWorker } = navigator;
 
