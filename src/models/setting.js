@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+=======
+/*
+ * @Author: zzz
+ * @LastEditors: zzz
+ */
+>>>>>>> e2ec507fe7e6ebd2529e1f64e9ac1917f0e4e214
 import defaultSettings from "../../config/defaultSettings";
 
 const updateColorWeak = (colorWeak) => {

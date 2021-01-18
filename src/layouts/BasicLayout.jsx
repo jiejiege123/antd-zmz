@@ -135,7 +135,7 @@ const BasicLayout = (props) => {
         );
       }}
       menuDataRender={menuDataRender} // 权限菜单相关
-      footerRender={() => defaultFooterDom} // footer
+      // footerRender={() => defaultFooterDom} // footer
       rightContentRender={() => <RightContent />} // header
       postMenuData={(menuData) => { // 服务器来管理我们的路由
         menuDataRef.current = menuData || [];
