@@ -4,8 +4,7 @@
   margin: 12px 0;
   padding: 12px 20px;
   background: @input-bg;
-  -webkit-box-shadow: @card-shadow;
-          box-shadow: @card-shadow;
+  box-shadow: @card-shadow;
 }
 .welcome{
 
@@ -31,4 +30,26 @@
   //   font-size: 16px;
   //   margin-right: 25px
   // }
+}
+
+.acticleList{
+  padding-left: 12px;
+  .acticle-item{
+    margin-bottom: 5px;
+    white-space: nowrap;
+    .time{
+      margin-right: 4px;
+      padding-right: 8px;
+      border-right: 1px solid #ECECEC;
+      width: 50px;
+      text-align: right;
+      color: #999;
+      font-size: 14px;
+      line-height: 18px;
+    }
+    // /deep/ .el-link{
+    //   padding-left: 5px;
+    //   line-height: 18px;
+    // }
+  }
 }

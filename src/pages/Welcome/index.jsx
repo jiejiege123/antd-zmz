@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { PageContainer } from "@ant-design/pro-layout";
-import { Typography, Button } from "antd";
-import { connect } from "umi";
+import { Typography, Button, Divider, Spin } from "antd";
+import { connect, history } from "umi";
 import styles from "./index.less";
 
 const CodePreview = ({ children }) => (
@@ -16,9 +16,7 @@ const CodePreview = ({ children }) => (
 const HeadTop = ({content}) => {
   const {types, articles} = content;
   const goWrite = () => {
-    // TODO: 跳转路由
-    console.log("123");
-
+    history.push("/welcome");
   };
   return (
     <div>
@@ -52,10 +50,37 @@ const HeadTop = ({content}) => {
   );
 };
 
+const ActicleList = ({content}) => {
+  const {acticleList, homePage} = content;
+  // console.log(acticleList);
+  const goDetail = (n) => {
+    window.open(`${homePage}/detail?id=${n.id}`);
+  };
+  const list = acticleList.map((n) => {
+    return (
+      <div key={n.id} className="layout-row align-center">
+        <div>
+          {n.updateTime.slice(5,10)}
+        </div>
+        <Button type="link" onClick= {() => {goDetail(n);}}>{n.title}</Button>
+      </div>
+    );
+  });
+  return (
+    <div>
+      <h3 className={styles.h3}>最新发布的文章</h3>
+      <div className={styles.acticleList}>
+        {list}
+      </div>
+    </div>
+  );
+};
+
 // 使用函数组件 然后使用connect方法完成 
 const Welecome = (props) => {
   // console.log(props);
-  const { dispatch, allData } = props;
+  const { dispatch, allData, currentUser, loading } = props;
+  const {homePage} = currentUser;
   const { types, articles ,acticleList } = allData;
   useEffect(() => {
     // 每次渲染后都执行的函数， 有点类似 vue 的 watch 和 computed
@@ -66,16 +91,22 @@ const Welecome = (props) => {
     }
   }, []);
   return (
-    <PageContainer header={{title: ""}} >
-      <div className={styles.warp}>
-        <HeadTop content={{ types, articles }}></HeadTop>
-      </div>
+    <PageContainer header={{title: ""}}>
+      <Spin spinning={loading}> 
+        <div className={styles.warp}>
+          <HeadTop content={{ types, articles }}></HeadTop>
+          <Divider style={{marginTop: "5px"}} />
+          <ActicleList content = {{acticleList, homePage}}></ActicleList>
+        </div>
+      </Spin>
+      
     </PageContainer>
 
   );
 };
 
-export default connect(({ welcomeTestModel, loading }) => ({
+export default connect(({ welcomeTestModel, loading, user }) => ({
+  currentUser: user.currentUser,
   allData: welcomeTestModel,
   loading: loading.effects["welcomeTestModel/getDataLsit"],
 }))(Welecome);
